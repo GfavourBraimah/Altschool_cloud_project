@@ -3,7 +3,7 @@
 - Open a terminal.
 - Run the command: `useradd bog_reaper`.
 
-![Step 1](images/01_useradd.png)
+![Step 1](./images/01%20useradd.png)
 
 This command creates a user named "bog_reaper."
 
@@ -13,7 +13,7 @@ This command creates a user named "bog_reaper."
 - Open a terminal.
 - Run the command: `sudo chage -E $(date -d "+2 weeks" "+%Y-%m-%d") bog_reaper`.
 
-![Step 2](images/02_step_2.png)
+![Step 2](./images/02%20step%202.png)
 
 This command sets an expiry date of 2 weeks for the user "bog_reaper."
 
@@ -30,7 +30,7 @@ After user creation and setting an expiry date, the system prioritizes security.
 - Open a terminal.
 - Run the command: `sudo usermod -a -G altschool bog_reaper`.
 
-![Step 4 ](images/04_step_4.png)
+![Step 4 ](./images/04%20step%204.png)
 
 This command attaches the user "bog_reaper" to the "altschool" group, granting them specific access privileges.
 
@@ -43,7 +43,7 @@ This command attaches the user "bog_reaper" to the "altschool" group, granting t
 - Open a terminal.
 - Run the command: `sudo visudo -f /etc/sudoers.d/altschool`.
 
-![Step 5 Screenshot](images/05_step_5.png)
+![Step 5 Screenshot](./images/05%20step%205.png)
 
 This configuration enables members of the "altschool" group to execute the `cat` command on the `/etc/` directory, promoting controlled access.
 
@@ -54,7 +54,7 @@ This configuration enables members of the "altschool" group to execute the `cat`
 - Open a terminal.
 - Run the command: `sudo useradd -M -s /bin/bash Tommy`.
 
-![Step 6 Screenshot](images/06_step_6.png)
+![Step 6 Screenshot](./images/06%20step%206.png)
 
 This command creates a user named "Tommy" without a home directory, ensuring specific access privileges.
 
