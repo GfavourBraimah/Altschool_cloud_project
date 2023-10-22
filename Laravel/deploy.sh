@@ -84,7 +84,7 @@ install_git_composer() {
 configure_apache() {
     echo "Configuring Apache for Laravel..."
     # Create a virtual host configuration file
-    sudo tee /etc/apache2/sites-available/laravel.conf <<EOF
+    cat << EOF > /etc/apache2/sites-available/laravel.conf 
 <VirtualHost *:80>
     ServerAdmin admin@techvblogs.com
     ServerName  192.168.33.100
@@ -155,7 +155,7 @@ setup_database() {
 
 # Define the environment variable values
 DB_DATABASE="bog_reaper"
-DB_USERNAME="bog_reaper_user"
+DB_USERNAME="bog_reaper"
 DB_PASSWORD="bog_reaper321"
 
 # Laravel .env file path
