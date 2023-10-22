@@ -1,0 +1,35 @@
+---
+
+- hosts: all
+  become: true 
+  pre-tasks: 
+
+  -name: update $ upgrade server
+   apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: set cron job to check uptime of the server every 12 am
+  cron:
+    name: setcronJob check to update theserver every 12 am
+    minutes: "0"
+    hour: "0"
+    day: "*"
+    month: "*"
+    weekemd: "*"
+  -name: copy the bash scripts to the slave machine 
+   copy:
+     src: deploy.sh
+     dest: ~/
+     owner: root
+     group: root 
+     mode: 0744
+
+- name: Set Execute Permissions on the Script
+  command: chmod +x ~/deploy.sh
+
+-name: Run Bash Script
+ command: bash laravel-slave.sh bog_reaper  bog_reaper321 < /dev/null
+
+
+  
