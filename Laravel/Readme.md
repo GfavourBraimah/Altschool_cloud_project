@@ -59,7 +59,7 @@ MySQL (Database): MySQL is a popular open-source relational database management 
 
 PHP (Scripting Language): PHP is a server-side scripting language. Laravel is written in PHP and it runs on the server. PHP is responsible for processing user requests, interacting with the database, and generating dynamic web pages. Laravel leverages PHP to build web applications and manage web routes, controllers, views, and models.
 
-**4. ANSIBLE**
+**3. ANSIBLE**
 
 Ansible, often described as a "simple, yet powerful" open-source automation tool, is a true game-changer in the world of IT operations and infrastructure management. This elegant and efficient automation platform provides a wide range of capabilities that simplify complex tasks, enhance productivity, and promote consistency across systems and networks.
 
