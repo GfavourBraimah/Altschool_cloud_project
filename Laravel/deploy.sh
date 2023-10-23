@@ -49,6 +49,37 @@ install_mysql() {
     # For example, you can create additional MySQL users and databases.
     # You can also skip the installation of the 'VALIDATE PASSWORD' plugin
     # (Type 'N' when prompted) if you don't need it.
+    
+# Remove anonymous users? (Press y|Y for Yes, any other key for No) : y
+# Success.
+
+
+# Normally, root should only be allowed to connect from
+# 'localhost'. This ensures that someone cannot guess at
+ # the root password from the network.
+
+# Disallow root login remotely? (Press y|Y for Yes, any other key for No) : y
+# Success.
+
+# By default, MySQL comes with a database named 'test' that
+# anyone can access. This is also intended only for testing,
+# and should be removed before moving into a production
+# environment.
+
+
+ # Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y
+# - Dropping test database...
+# Success.
+
+ # - Removing privileges on test database...
+# Success.
+
+# Reloading the privilege tables will ensure that all changes
+# made so far will take effect immediately.
+
+# Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
+# Success.
+
 }
 
 # Function to install and configure PHP
@@ -137,56 +168,34 @@ configure_laravel() {
     echo "Laravel .env file configured."
 }
 
-# Function to set up the database
-# Default MySQL root password
-db_password="bog_reaper321"
 
 # Function to set up the database
-setup_database() {
-    echo "Setting up the database..."
-    if [ -z "$db_password" ]; then
-        read -s -p "Enter your MySQL root password: " db_password
-    fi
-    mysql -u root -p$db_password -e "CREATE DATABASE bog_reaper;"
-    mysql -u root -p$db_password -e "GRANT ALL PRIVILEGES ON bog_reaper.* TO 'bog_reaper_user'@'localhost';"
-    mysql -u root -p$db_password -e "FLUSH PRIVILEGES;"
-    echo "Database setup completed."
-}
-
 # Define the environment variable values
 DB_DATABASE="bog_reaper"
 DB_USERNAME="bog_reaper"
 DB_PASSWORD="bog_reaper321"
 
-# Laravel .env file path
-ENV_FILE="/var/www/html/laravel/.env"
+setup_database() {
+    echo "Setting up the database..."
+    if [ -f /var/www/html/laravel/.env ]; then
+        # Load database credentials from .env file
+        source /var/www/html/laravel/.env
 
-# Check if the .env file exists
-if [ -f "$ENV_FILE" ]; then
-    # Use sed to find and replace the values in the .env file
-  sudo  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_DATABASE/" "$ENV_FILE"
-   sudo  sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/" "$ENV_FILE"
-    sudo sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" "$ENV_FILE"
-    echo "Updated .env file with database credentials."
+        # Create the database
+        mysql -u root -p"$DB_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
 
-    # Check if Laravel is properly installed before migrating the database
-    if [ -d "/var/www/html/laravel" ]; then
-        # Migrate the database
-        cd /var/www/html/laravel
-        php artisan migrate
+        # Grant privileges to the database user
+        mysql -u root -p"$DB_PASSWORD" -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USERNAME'@'localhost';"
 
-        # Activate the Laravel virtual host
-        sudo a2ensite laravel.conf
+        # Flush privileges
+        mysql -u root -p"$DB_PASSWORD" -e "FLUSH PRIVILEGES;"
 
-        # Restart Apache
-        sudo service apache2 restart
+        echo "Database setup completed."
     else
-        echo "Laravel is not properly installed. Please check your installation."
+        echo ".env file not found. Please make sure it exists."
     fi
-else
-    echo ".env file not found. Please make sure the file exists."
-fi
-
+    # In this section after the scripts ran you will be required to enter bog_reaper321 three types as the password
+}
 # Main script
 install_essentials
 configure_firewall
