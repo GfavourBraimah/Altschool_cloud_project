@@ -201,4 +201,42 @@ Now paste the content you have inside this delopy.yaml inside your own
    ssh-copy-id vagrant@192.168.33.101
 
  ```
+20. After this exit or ctrl C
+21. Log into the slave vm to Make sure that password-based authentication is allowed in the SSH server's configuration file (/etc/ssh/sshd_config). This line should be set to "yes":
+ ```
+    vagrant ssh slave
+ ```
+  ```
+    sudo vim /etc/ssh/sshd_config
+  ```
+22. Scrol down and you will see 
+  - PasswordAuthentication no
+23. change it to yes 
+   - PasswordAuthentication yes
+
+24.  Restart the ssh service to apply changes
+    ```
+       sudo service ssh restart
+    ```
+24. Now go back to the master vm  first my exiting
+ ```
+    exit
+```
+
+ ```
+   vagrant ssh master
+```
+25. Now test if its worked 
+ ``` 
+   ssh vagrant@192.168.33.101
+ ``` 
+
+26. if it worked then go ahead and run the playbook Make sure you are inside the "Ansible-playbook" directory on your "Master" VM:
+```
+  cd ~/Ansible-playbook
+```
+27. Run the Ansible playbook using the ansible-playbook command and specify the deploy.yaml playbook file:
+```
+   ansible-playbook deploy.yaml
+```
 
