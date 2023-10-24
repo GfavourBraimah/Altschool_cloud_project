@@ -185,18 +185,20 @@ Now paste the content you have inside this ansible.cfg inside your own
     vim delopy.yaml
   ```
 Now paste the content you have inside this delopy.yaml inside your own 
+
 16. Go back
  ```
   cd ..
 ```
 
-16. Before we run the playbook we need to enable key based-authentication between the master and slave vm's
-17. Generate an ssh key inside the master vm now
+17. Before we run the playbook we need to enable key based-authentication between the master and slave vm's
+18. Generate an ssh key inside the master vm now
   ```
    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 ```
-18. Copy the keys to the slave vm authorised key file
+19. Copy the keys to the slave vm authorised key file
  ```
    ssh-copy-id vagrant@192.168.33.101
 
  ```
+
