@@ -122,14 +122,18 @@ This Ansible project automates the deployment and configuration of servers and a
 The "Master" VM is the control center that orchestrates and initiates the deployment process on both VMs. The "Slave" VM is the target system where the actual provisioning, configuration, and deployment tasks take place. Together, they work in tandem to achieve your goal of setting up a LAMP stack and deploying a Laravel application in an automated and reproducible manner. This approach makes it easier to scale and manage your server infrastructure and applications.
 
 **How to run the scripts**
-
-1. Firstly, run the Automation.sh.
-2. Secondly, log in to the master VM using `vagrant ssh master`.
-3. Thirdly, run the deploy.sh as a root user to avoid some permissions issues:
-   - `cd Ansible-playbook`
-   - `cd files`
-   - `sudo su`
-   - `cd`
-   - `./deploy.sh`
-4. Run the Ansible playbook:
-   - `ansible-playbook -i inventory deploy.yaml`
+1. Create a folder 
+`mkdir Laravel`
+2. Go into the folder
+   `cd Laravel`
+3. Create a file called Automation.sh then add the Automation.sh scripts on this repo
+or Open the folder inside vscode then create a new file called Automation.sh then copy the scripts on the Automation.sh then paste it inside the Automation.sh script you have made
+4. Open a new terminal and run the scripts
+    `./Automation.sh`
+5. It will generate new vagrantfile then file then start up the machine 
+     `vagrant up`
+6. Now the machine has botted ssh into the master machine now
+  ```
+   vagrant ssh master
+  ```
+         
