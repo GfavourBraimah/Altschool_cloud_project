@@ -215,7 +215,8 @@ Now paste the content you have inside this delopy.yaml inside your own
    - PasswordAuthentication yes
 
 24.  Restart the ssh service to apply changes
-    ```
+
+ ```
        sudo service ssh restart
     ```
 24. Now go back to the master vm  first my exiting
