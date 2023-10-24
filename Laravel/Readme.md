@@ -236,6 +236,7 @@ Now paste the content you have inside this delopy.yaml inside your own
 ```
   cd ~/Ansible-playbook
 ```
+
 27. Run the Ansible playbook using the ansible-playbook command and specify the deploy.yaml playbook file:
 
 ```
