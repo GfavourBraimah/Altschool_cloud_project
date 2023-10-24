@@ -137,9 +137,66 @@ or Open the folder inside vscode then create a new file called Automation.sh the
    ./Automation.sh
 ```
 6. It will generate new vagrantfile then file then start up the machine 
-     `vagrant up`
+ ```
+    vagrant up
+ ```
 7. Now the machine has botted ssh into the master machine now
   ```
    vagrant ssh master
   ```
-         
+8. Then create a folder called Ansible-playbook and create a file called deploy.sh
+
+  ```
+   mkdir Ansible-playbook
+  ```
+   ```
+     cd Ansible-playbook
+   ```
+  ```
+      nano deploy.sh
+  ```
+after this copy the scripts inside the deploy.sh then paste it in your own
+
+9. Give the script permissions
+    ```
+       sudo chmod u+x deploy.sh
+    ```
+10. Go ahead and run the script, but wait you will have to switch to the root user to run the scripts to avoid some permissions issues inside the scripts
+  ```
+     sudo su
+  ```
+11. Now go ahead and run the script
+ ```
+   ./deploy.sh
+ ```
+
+12. After running the script go ahead and paste the ipadresss on your browser then you should see PHP application there
+13. Still inside the master the Ansible-playbook then create a new file called ansible.cfg
+  ```
+    vim ansible.cfg
+```
+Now paste the content you have inside this ansible.cfg inside your own 
+14.  Create a new file called inventory 
+   ``` 
+   vim inventory
+  ```
+15. Now the last file we will create the playbook  
+  ```
+    vim delopy.yaml
+  ```
+Now paste the content you have inside this delopy.yaml inside your own 
+16. Go back
+ ```
+  cd ..
+```
+
+16. Before we run the playbook we need to enable key based-authentication between the master and slave vm's
+17. Generate an ssh key inside the master vm now
+  ```
+   ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+```
+18. Copy the keys to the slave vm authorised key file
+ ```
+   ssh-copy-id vagrant@192.168.33.101
+
+ ```
