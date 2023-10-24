@@ -123,16 +123,22 @@ The "Master" VM is the control center that orchestrates and initiates the deploy
 
 **How to run the scripts**
 1. Create a folder 
-`mkdir Laravel`
-2. Go into the folder
-   `cd Laravel`
-3. Create a file called Automation.sh then add the Automation.sh scripts on this repo
+```
+  mkdir Laravel
+```
+3. Go into the folder
+  ```
+   cd Laravel
+  ```
+4. Create a file called Automation.sh then add the Automation.sh scripts on this repo
 or Open the folder inside vscode then create a new file called Automation.sh then copy the scripts on the Automation.sh then paste it inside the Automation.sh script you have made
-4. Open a new terminal and run the scripts
-    `./Automation.sh`
-5. It will generate new vagrantfile then file then start up the machine 
+5. Open a new terminal and run the scripts
+  ```
+   ./Automation.sh
+```
+6. It will generate new vagrantfile then file then start up the machine 
      `vagrant up`
-6. Now the machine has botted ssh into the master machine now
+7. Now the machine has botted ssh into the master machine now
   ```
    vagrant ssh master
   ```
