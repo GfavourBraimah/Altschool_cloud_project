@@ -219,23 +219,29 @@ Now paste the content you have inside this delopy.yaml inside your own
  ```
        sudo service ssh restart
     ```
+
 24. Now go back to the master vm  first my exiting
+
+
  ```
     exit
 ```
 
  ```
    vagrant ssh master
-```
+  ```
 
 
 25. Now test if its worked
 
+
  ``` 
    ssh vagrant@192.168.33.101
- ``` 
+ ```
+
 
 26. if it worked then go ahead and run the playbook Make sure you are inside the "Ansible-playbook" directory on your "Master" VM:
+
 
 ```
   cd ~/Ansible-playbook
