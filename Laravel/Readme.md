@@ -122,6 +122,9 @@ This Ansible project automates the deployment and configuration of servers and a
 The "Master" VM is the control center that orchestrates and initiates the deployment process on both VMs. The "Slave" VM is the target system where the actual provisioning, configuration, and deployment tasks take place. Together, they work in tandem to achieve your goal of setting up a LAMP stack and deploying a Laravel application in an automated and reproducible manner. This approach makes it easier to scale and manage your server infrastructure and applications.
 
 **How to run the scripts**
+Vagrant and VirtualBox: Ensure that Vagrant and VirtualBox (or another supported virtualization provider) are installed on your system. You can download and install Vagrant from the official website (https://www.vagrantup.com/downloads) and VirtualBox from the Oracle VirtualBox website (https://www.virtualbox.org/).
+
+Git: You need Git installed on your system to clone the repository containing the automation scripts and configuration files.
 1. Create a folder 
 ```
   mkdir Laravel
