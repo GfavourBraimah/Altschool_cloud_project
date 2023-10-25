@@ -233,7 +233,7 @@ Now paste the content you have inside this delopy.yaml inside your own
 
 
 25. Now test if its worked
-
+ ```
    ssh vagrant@192.168.33.101
  ```
 
