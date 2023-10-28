@@ -16,16 +16,20 @@ configure_firewall() {
     echo "Configuring firewall (UFW)..."
     sudo apt update
     sudo apt install ufw -y
-    sudo ufw allow OpenSSH
-    sudo ufw allow WWW
-    sudo ufw allow 'WWW Full'
-    sudo ufw allow 80
-    sudo ufw allow 22
-    sudo ufw allow 443
-    sudo ufw enable
+
+    # Provide "yes" to the UFW command's prompt
+    echo "y" | sudo ufw allow OpenSSH
+    echo "y" | sudo ufw allow WWW
+    echo "y" | sudo ufw allow 'WWW Full'
+    echo "y" | sudo ufw allow 80
+    echo "y" | sudo ufw allow 22
+    echo "y" | sudo ufw allow 443
+
+    # Automatically enable UFW without prompting
+    echo "y" | sudo ufw enable
+
     echo "Firewall configured."
 }
-
 # Function to install and configure Apache
 install_apache() {
     echo "Installing and configuring Apache..."
@@ -40,15 +44,13 @@ install_mysql() {
     sudo apt-get update
     sudo apt-get install mysql-server -y
 
-    # Run the MySQL secure installation script
+    # Run the MySQL secure installation script with predefined answers
     echo "Running MySQL secure installation..."
-    sudo mysql_secure_installation
+    echo -e "n\ny\n0\n$DB_PASSWORD\n$DB_PASSWORD\ny\ny\ny\ny\n" | sudo mysql_secure_installation
     echo "MySQL secure installation complete."
 
     # Optionally, you can set up other MySQL configurations here if needed.
     # For example, you can create additional MySQL users and databases.
-    # You can also skip the installation of the 'VALIDATE PASSWORD' plugin
-    # (Type 'N' when prompted) if you don't need it.
 }
 
 # Function to install and configure PHP
@@ -73,12 +75,15 @@ configure_php() {
 # Function to install Git and Composer
 install_git_composer() {
     echo "Installing Git and Composer..."
-    sudo apt update
-    sudo apt install -y git
-    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
+    # Automatically answer "yes" to the prompts
+    echo "yes" | sudo apt update
+    echo "yes" | sudo apt install -y git
+    echo "yes" | curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
     composer --version
     echo "Git and Composer installed."
 }
+
 
 # Function to configure Apache for Laravel
 configure_apache() {
@@ -136,56 +141,37 @@ configure_laravel() {
     php /var/www/html/laravel/artisan key:generate
     echo "Laravel .env file configured."
 }
-
-# Function to set up the database
-# Default MySQL root password
-db_password="bog_reaper321"
-
 # Function to set up the database
 setup_database() {
     echo "Setting up the database..."
-    if [ -z "$db_password" ]; then
-        read -s -p "Enter your MySQL root password: " db_password
-    fi
-    mysql -u root -p$db_password -e "CREATE DATABASE bog_reaper;"
-    mysql -u root -p$db_password -e "GRANT ALL PRIVILEGES ON bog_reaper.* TO 'bog_reaper@'localhost';"
-    mysql -u root -p$db_password -e "FLUSH PRIVILEGES;"
-    echo "Database setup completed."
-}
+    if [ -f /var/www/html/laravel/.env ]; then
+        # Load database credentials from .env file
+        source /var/www/html/laravel/.env
 
-# Define the environment variable values
-DB_DATABASE="bog_reaper"
-DB_USERNAME="bog_reaper"
-DB_PASSWORD="bog_reaper321"
+        # Define the new database and user credentials
+        NEW_DB_NAME="bog_reaper"
+        NEW_DB_USER="bog_reaper"
+        NEW_DB_PASS="bog_reaper321"
 
-# Laravel .env file path
-ENV_FILE="/var/www/html/laravel/.env"
+        # Create the database and user without prompts
+        mysql -u root <<MYSQL_SCRIPT
+CREATE DATABASE IF NOT EXISTS $NEW_DB_NAME;
+CREATE USER IF NOT EXISTS '$NEW_DB_USER'@'localhost' IDENTIFIED BY '$NEW_DB_PASS';
+GRANT ALL PRIVILEGES ON $NEW_DB_NAME.* TO '$NEW_DB_USER'@'localhost';
+FLUSH PRIVILEGES;
+MYSQL_SCRIPT
 
-# Check if the .env file exists
-if [ -f "$ENV_FILE" ]; then
-    # Use sed to find and replace the values in the .env file
-  sudo  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_DATABASE/" "$ENV_FILE"
-   sudo  sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USERNAME/" "$ENV_FILE"
-    sudo sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" "$ENV_FILE"
-    echo "Updated .env file with database credentials."
+        # Update the .env file with new MySQL credentials
+        sed -i "s/DB_DATABASE=.*/DB_DATABASE=$NEW_DB_NAME/" /var/www/html/laravel/.env
+        sed -i "s/DB_USERNAME=.*/DB_USERNAME=$NEW_DB_USER/" /var/www/html/laravel/.env
+        sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$NEW_DB_PASS/" /var/www/html/laravel/.env
+        echo ".env file updated with new MySQL credentials."
 
-    # Check if Laravel is properly installed before migrating the database
-    if [ -d "/var/www/html/laravel" ]; then
-        # Migrate the database
-        cd /var/www/html/laravel
-        php artisan migrate
-
-        # Activate the Laravel virtual host
-        sudo a2ensite laravel.conf
-
-        # Restart Apache
-        sudo service apache2 restart
+        echo "Database setup completed."
     else
-        echo "Laravel is not properly installed. Please check your installation."
+        echo ".env file not found. Please make sure it exists."
     fi
-else
-    echo ".env file not found. Please make sure the file exists."
-fi
+}
 
 # Main script
 install_essentials
