@@ -176,8 +176,9 @@ after this copy the scripts inside the deploy.sh then paste it in your own
  ```
 
 12. After running the script go ahead and paste the ipadresss on your browser then you should see PHP application there
-13. Still inside the master the Ansible-playbook then create a new file called ansible.cfg
+13. Still inside the master the Ansible-playbook then create a new file called ansible.cfg but first go back to the Ansible-playbook dir
   ```
+    cd..
     vim ansible.cfg
 ```
 Now paste the content you have inside this ansible.cfg inside your own 
