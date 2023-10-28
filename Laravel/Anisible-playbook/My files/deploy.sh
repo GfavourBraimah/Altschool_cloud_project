@@ -148,14 +148,14 @@ setup_database() {
         read -s -p "Enter your MySQL root password: " db_password
     fi
     mysql -u root -p$db_password -e "CREATE DATABASE bog_reaper;"
-    mysql -u root -p$db_password -e "GRANT ALL PRIVILEGES ON bog_reaper.* TO 'bog_reaper_user'@'localhost';"
+    mysql -u root -p$db_password -e "GRANT ALL PRIVILEGES ON bog_reaper.* TO 'bog_reaper@'localhost';"
     mysql -u root -p$db_password -e "FLUSH PRIVILEGES;"
     echo "Database setup completed."
 }
 
 # Define the environment variable values
 DB_DATABASE="bog_reaper"
-DB_USERNAME="bog_reaper_user"
+DB_USERNAME="bog_reaper"
 DB_PASSWORD="bog_reaper321"
 
 # Laravel .env file path
