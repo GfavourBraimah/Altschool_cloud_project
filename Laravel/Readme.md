@@ -189,7 +189,7 @@ Now paste the content you have inside this ansible.cfg inside your own
   ```
 15. Now the last file we will create the playbook  
   ```
-    vim delopy.yaml
+    vim deploy.yaml
   ```
 Now paste the content you have inside this delopy.yaml inside your own 
 
