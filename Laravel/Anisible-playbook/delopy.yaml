@@ -1,35 +1,34 @@
 ---
-
 - hosts: all
-  become: true 
-  pre-tasks: 
+  become: true
+  vars:
+    db_user: bog_reaper
+    db_password: bog_reaper321
 
-  -name: update $ upgrade server
-   apt:
-    update_cache: yes
-    upgrade: yes
+  tasks:
+    - name: Update and upgrade the server
+      apt:
+        update_cache: true
+        upgrade: yes
 
-- name: set cron job to check uptime of the server every 12 am
-  cron:
-    name: setcronJob check to update theserver every 12 am
-    minutes: "0"
-    hour: "0"
-    day: "*"
-    month: "*"
-    weekemd: "*"
-  -name: copy the bash scripts to the slave machine 
-   copy:
-     src: deploy.sh
-     dest: ~/
-     owner: root
-     group: root 
-     mode: 0744
+    - name: Cron job to check the server uptime every 12 A.M
+      ansible.builtin.cron:
+        name: "Server's uptime every 12 A.M"
+        state: present
+        minute: "0"
+        hour: "0"
+        day: "*"
+        month: "*"
+        weekday: "*"
+        job: "/usr/bin/uptime > /var/log/uptime_check.log 2>&1"
 
-- name: Set Execute Permissions on the Script
-  command: chmod +x ~/deploy.sh
+    - name: Copy the bash script from the master to the slave machine
+      copy:
+        src: deploy.sh
+        dest: ~/deploy.sh
+        owner: root
+        group: root
+        mode: 0744
 
--name: Run Bash Script
- command: bash laravel-slave.sh bog_reaper  bog_reaper321 < /dev/null
-
-
-  
+    - name: Run the bash script on the slave machine
+      command: "~/deploy.sh {{ db_user }} {{ db_password }}"
