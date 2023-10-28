@@ -143,11 +143,11 @@ or Open the folder inside vscode then create a new file called Automation.sh the
  ```
     vagrant up
  ```
-7. Now the machine has botted ssh into the master machine now
+7. Now the machine has booted ssh into the master machine now
   ```
    vagrant ssh master
   ```
-8. Then create a folder called Ansible-playbook and create a file called deploy.sh
+8. Then create a folder called Ansible-playbook and create a directory called files and a file  called deploy.sh
 
   ```
    mkdir Ansible-playbook
@@ -157,9 +157,7 @@ or Open the folder inside vscode then create a new file called Automation.sh the
    ```
 
   ```
-      mkdir files
-
-   ```
+     mkdir files 
      nano deploy.sh
   ```
 after this copy the scripts inside the deploy.sh then paste it in your own
