@@ -226,7 +226,7 @@ Now paste the content you have inside this delopy.yaml inside your own
        sudo service ssh restart
     ```
 
-24. Now go back to the master vm  first my exiting
+24. Now go back to the master vm  first by exiting
 
 
  ```
@@ -254,6 +254,6 @@ Now paste the content you have inside this delopy.yaml inside your own
 
 27. Run the Ansible playbook using the ansible-playbook command and specify the deploy.yaml playbook file:
   ```
-   ansible-playbook deploy.yaml
+   ansible-playbook deploy.yml
 
   ```
