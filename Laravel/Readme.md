@@ -76,9 +76,9 @@ The ansible.cfg file contains configuration settings for Ansible. Here's what ea
 - `private_key_file = ~/.ssh/id_rsa`: Specifies the SSH private key file to use for authentication. The `~` represents the user's home directory, and `~/.ssh/id_rsa` is the path to the private key.
 - `host_key_checking = False`: Disables host key checking to prevent interactive prompts for new hosts.
 
-**deploy.yaml**
+**deploy.yml**
 
-The deploy.yaml file is an Ansible playbook. Playbooks describe a series of tasks to be executed on remote hosts. Here's a breakdown of the playbook's content:
+The deploy.yml file is an Ansible playbook. Playbooks describe a series of tasks to be executed on remote hosts. Here's a breakdown of the playbook's content:
 
 - `hosts: all`: Indicates that these tasks should be executed on all hosts defined in the inventory.
 - `become: true`: Specifies that Ansible should escalate privileges and run commands as a superuser (typically using sudo).
@@ -87,7 +87,7 @@ The deploy.yaml file is an Ansible playbook. Playbooks describe a series of task
 - `name: set cron job to check uptime of the server every 12 am`: Defines the second task, which uses the cron module to schedule a cron job for checking server uptime at midnight.
 - `name: copy the bash scripts to the slave machine`: Describes the task for copying a bash script to the slave machine.
 - `name: Set Execute Permissions on the Script`: Specifies a task for setting execute permissions on the copied script.
-- `name: Run Bash Script`: Describes the final task, which runs a bash script (laravel-slave.sh) with specific arguments.
+- `name: Run Bash Script`: Describes the final task, which runs a bash script (deploy.sh) with specific arguments.
 
 **inventory**
 
@@ -155,8 +155,8 @@ or Open the folder inside vscode then create a new file called Automation.sh the
    ```
      cd Ansible-playbook
    ```
-  ```
-      nano deploy.sh
+  ```mkdir files
+   ```   nano deploy.sh
   ```
 after this copy the scripts inside the deploy.sh then paste it in your own
 
