@@ -155,8 +155,12 @@ or Open the folder inside vscode then create a new file called Automation.sh the
    ```
      cd Ansible-playbook
    ```
-  ```mkdir files
-   ```   nano deploy.sh
+
+  ```
+      mkdir files
+
+   ```
+     nano deploy.sh
   ```
 after this copy the scripts inside the deploy.sh then paste it in your own
 
