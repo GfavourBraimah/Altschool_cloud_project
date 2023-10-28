@@ -182,6 +182,7 @@ after this copy the scripts inside the deploy.sh then paste it in your own
     vim ansible.cfg
 ```
 Now paste the content you have inside this ansible.cfg inside your own 
+
 14.  Create a new file called inventory 
    ``` 
    vim inventory
