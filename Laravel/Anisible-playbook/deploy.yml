@@ -34,7 +34,7 @@
       command: "~/deploy.sh {{ db_user }} {{ db_password }}"
 
 - name: Update Apache Virtual Host Configuration
-  hosts: 192.168.33.100
+  hosts: 192.168.33.101
   become: yes
   tasks:
     - name: Replace IP address in Apache virtual host config
