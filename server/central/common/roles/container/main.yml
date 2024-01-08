@@ -1,2 +1,0 @@
-- name: Start nginx container
-  import_tasks: container.yml

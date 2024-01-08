@@ -1,2 +1,0 @@
-- name: Setup Docker
-  import_tasks: docker.yml
