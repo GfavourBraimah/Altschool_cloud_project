@@ -88,6 +88,7 @@ The deploy.yml file is an Ansible playbook. Playbooks describe a series of tasks
 - `name: copy the bash scripts to the slave machine`: Describes the task for copying a bash script to the slave machine.
 - `name: Set Execute Permissions on the Script`: Specifies a task for setting execute permissions on the copied script.
 - `name: Run Bash Script`: Describes the final task, which runs a bash script (deploy.sh) with specific arguments.
+- 
 
 **inventory**
 

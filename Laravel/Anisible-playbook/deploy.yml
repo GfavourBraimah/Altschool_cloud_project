@@ -32,3 +32,27 @@
 
     - name: Run the bash script on the slave machine
       command: "~/deploy.sh {{ db_user }} {{ db_password }}"
+
+- name: Update Apache Virtual Host Configuration
+  hosts: 192.168.33.101
+  become: yes
+  tasks:
+    - name: Replace IP address in Apache virtual host config
+      replace:
+        path: /etc/apache2/sites-available/laravel.conf
+        regexp: "ServerName 192.168.33.100"
+        replace: "ServerName 192.168.33.101"
+      notify:
+        - Restart Apache
+
+    - name: Enable Apache Rewrite Module
+      command: a2enmod rewrite
+
+    - name: Enable Laravel Virtual Host
+      command: a2ensite laravel.conf
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted

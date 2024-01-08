@@ -30,6 +30,7 @@ configure_firewall() {
 
     echo "Firewall configured."
 }
+
 # Function to install and configure Apache
 install_apache() {
     echo "Installing and configuring Apache..."
@@ -53,6 +54,7 @@ install_mysql() {
     # For example, you can create additional MySQL users and databases.
 }
 
+
 # Function to install and configure PHP
 install_php() {
     echo "Installing and configuring PHP..."
@@ -72,41 +74,44 @@ configure_php() {
     echo "PHP configured."
 }
 
+# ... (previous functions)
+
 # Function to install Git and Composer
 install_git_composer() {
-    echo "Installing Git and Composer..."
+    echo -e "\n\nInstalling Composer\n"
+    sudo apt-get update -y < /dev/null
+    sudo apt install curl -y < /dev/null
+    sudo apt install -y git < /dev/null
+    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    export COMPOSER_ALLOW_SUPERUSER=1
 
-    # Automatically answer "yes" to the prompts
-    echo "yes" | sudo apt update
-    echo "yes" | sudo apt install -y git
-    echo "yes" | curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-    composer --version
-    echo "Git and Composer installed."
+    composer --version < /dev/null
+    echo -e "\n\nComposer successfully installed\n"
 }
-
 
 # Function to configure Apache for Laravel
 configure_apache() {
     echo "Configuring Apache for Laravel..."
-    # Create a virtual host configuration file
-    sudo tee /etc/apache2/sites-available/laravel.conf <<EOF
-<VirtualHost *:80>
-    ServerAdmin admin@techvblogs.com
-    ServerName  192.168.33.100
-    DocumentRoot /var/www/html/your-project-name/public
+    # Create a virtual host configuration file using cat
+    cat <<-EOF > /etc/apache2/sites-available/laravel.conf
+    <VirtualHost *:80>
+        ServerAdmin admin@techvblogs.com
+        ServerName 192.168.33.100
+        DocumentRoot /var/www/html/laravel/public
 
-    <Directory /var/www/html/your-project-name/public>
-       Options +FollowSymlinks
-       AllowOverride All
-       Require all granted
-    </Directory>
+        <Directory /var/www/html/laravel/public>
+            Options +FollowSymlinks
+            AllowOverride All
+            Require all granted
+        </Directory>
 
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
 EOF
     echo "Apache configured for Laravel."
 }
+
 
 # Function to clone Laravel from GitHub repository
 clone_laravel() {
@@ -141,7 +146,8 @@ configure_laravel() {
     php /var/www/html/laravel/artisan key:generate
     echo "Laravel .env file configured."
 }
-# Function to set up the database
+
+ # Function to set up the database
 setup_database() {
     echo "Setting up the database..."
     if [ -f /var/www/html/laravel/.env ]; then
@@ -172,7 +178,6 @@ MYSQL_SCRIPT
         echo ".env file not found. Please make sure it exists."
     fi
 }
-
 # Main script
 install_essentials
 configure_firewall
