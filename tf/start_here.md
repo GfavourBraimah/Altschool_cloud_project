@@ -47,10 +47,17 @@ Development Environment
 ```
 
 
-Production Environment        
-        terraform init
-        terraform plan --var-file west-prod.tfvars
-        terraform apply --var-file west-prod.tfvars
+Production Environment   
+ ```
+    terraform init
+```
+```
+       terraform plan --var-file west-prod.tfvars
+   ```
+     terraform apply --var-file west-prod.tfvars
+   ```
+
+  ```
         terraform apply --var-file west-prod.tfvars
      
- 
+ ```
